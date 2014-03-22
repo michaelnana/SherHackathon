@@ -6,5 +6,7 @@
     <string name="startSay">Choose an activity</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_home">HomeActivity</string>
+    <string name="title_activity_map">MapActivity</string>
+    <string name="title_activity_front">FrontActivity</string>
 
 </resources>
