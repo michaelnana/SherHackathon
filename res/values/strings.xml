@@ -8,5 +8,6 @@
     <string name="title_activity_home">HomeActivity</string>
     <string name="title_activity_map">MapActivity</string>
     <string name="title_activity_front">FrontActivity</string>
+    <string name="title_activity_info">InfoActivity</string>
 
 </resources>

@@ -11,6 +11,8 @@ import org.json.JSONObject;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.GoogleMap.OnInfoWindowClickListener;
+import com.google.android.gms.maps.GoogleMap.OnMarkerClickListener;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
@@ -35,6 +37,7 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.content.Context;
+import android.content.Intent;
 
 public class MapActivity extends ActionBarActivity {
 	
@@ -87,9 +90,11 @@ public class MapActivity extends ActionBarActivity {
 		  double lat;
 		  double longi;
 		  ArrayList pairs=new ArrayList();
+		  ArrayList names=new ArrayList();
 		  double myLat;
 		  double myLong;
-		 
+		 String currName;
+		  
 		public PlaceholderFragment() {
 		}
 
@@ -103,8 +108,8 @@ public class MapActivity extends ActionBarActivity {
 		
 		public void onActivityCreated(Bundle savedInstanceState){
 			super.onActivityCreated(savedInstanceState);
-			tx=(TextView)getView().findViewById(R.id.testText);
-			map = ((SupportMapFragment) getFragmentManager().findFragmentById(R.id.map)).getMap();
+			//tx=(TextView)getView().findViewById(R.id.testText);
+			//map = ((SupportMapFragment) getFragmentManager().findFragmentById(R.id.map)).getMap();
 			new SportPoints().execute();
 			//piscine=new LatLng(myLat, myLong);
 			mapper = ((SupportMapFragment) getFragmentManager().findFragmentById(R.id.map))
@@ -119,11 +124,12 @@ public class MapActivity extends ActionBarActivity {
 				        POS=new LatLng(myLat, myLong);
 						Marker here = mapper.addMarker(new MarkerOptions().position(POS)
 						        .title("You are here"));
-						 // Move the camera instantly to hamburg with a zoom of 15.
-					    map.moveCamera(CameraUpdateFactory.newLatLngZoom(POS, 20));
+						 // Move the camera instantly to your location with a zoom of 25.
+					    mapper.moveCamera(CameraUpdateFactory.newLatLngZoom(POS, 25));
 					
 					    // Zoom in, animating the camera.
-					    map.animateCamera(CameraUpdateFactory.zoomTo(10), 2000, null);
+					    mapper.animateCamera(CameraUpdateFactory.zoomTo(10), 2000, null);
+					   
 				        
 				    }
 
@@ -152,15 +158,29 @@ public class MapActivity extends ActionBarActivity {
 		public void mapStuff(){
 			Log.d("Length of values", "Pairs: "+pairs.size());
 			for(int i=0; i<pairs.size(); i++){
+				map = ((SupportMapFragment) getFragmentManager().findFragmentById(R.id.map)).getMap();
 			piscine=new LatLng((double)((ArrayList)pairs.get(i)).get(0), (double)((ArrayList)pairs.get(i)).get(1));
-			
-	    Marker hamburg = map.addMarker(new MarkerOptions().position(piscine)
-	        .title("Piscine "+i));
-	   
+			currName=(String)names.get(i);
+			Marker hamburg = map.addMarker(new MarkerOptions().position(piscine)
+	        .title((String)names.get(i)));
+			 map.setOnInfoWindowClickListener(new OnInfoWindowClickListener() {
+
+			        public void onInfoWindowClick(Marker marker) {
+			        	//handleClick();
+			        	Log.d("The Current name is",currName);
+						Intent it = new Intent(getActivity(), InfoActivity.class);
+			            Bundle extras=new Bundle();
+			            extras.putString("Name",marker.getTitle());
+			            it.putExtras(extras);
+			            startActivity(it);
+
+			        }
+			    });
 	
 	   
 			}
 		}
+		
 		
 		private static String readUrl(String urlString) throws Exception {
 		    BufferedReader reader = null;
@@ -195,6 +215,7 @@ public class MapActivity extends ActionBarActivity {
 					
 					
 					String t=jo.getString("GEOM");
+					names.add(jo.getString("LOC"));
 					String s=t.substring(7,t.length()-1);
 					
 					String[] arr=s.split(" ");
@@ -204,21 +225,8 @@ public class MapActivity extends ActionBarActivity {
 					values.add(lat);
 					values.add(longi);
 					pairs.add(values);
-					tx.setText("Long: "+(lat+10));
-					/*//if((int)js.get("code")==0)
-					//tx.setText(jo.getString("Nom"));
-					jse= new JSONObject(readUrl("http://maps.googleapis.com/maps/api/geocode/json?address=96+Croissant+Oxford,+Sherbrooke,+QC&sensor=true"));
-					JSONArray jar=jse.getJSONArray("results");
-					JSONObject jor=jar.getJSONObject(0);
-					JSONObject jore=jor.getJSONObject("geometry");
-					JSONObject jorer=jore.getJSONObject("location");
-					/*JSONArray jare=jor.getJSONArray("geometry.location");
-					JSONObject jore=jare.getJSONObject(0);
-					JSONArray jarer=jore.getJSONArray("location");
-					JSONObject jorer=jarer.getJSONObject(0);*/
-					//if((int)js.get("code")==0)*/
-					//tx.setText(jorer.getString("lat"));
-					//tex.setText("Yeah");
+					//tx.setText("Long: "+(lat+10));
+					
 					}
 				
 				} catch (Exception e) {

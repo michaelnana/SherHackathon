@@ -1,12 +1,8 @@
 package com.hack.sherhackathon;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.ListFragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -14,30 +10,29 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.Button;
-import android.widget.ListView;
+import android.widget.TextView;
 import android.os.Build;
-import android.widget.AdapterView.OnItemClickListener;
 
-public class FrontActivity extends ActionBarActivity {
+public class InfoActivity extends ActionBarActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_home);
+		setContentView(R.layout.activity_info);
 
 		if (savedInstanceState == null) {
 			getSupportFragmentManager().beginTransaction()
 					.add(R.id.container, new PlaceholderFragment()).commit();
 		}
+		
+		
 	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.front, menu);
+		getMenuInflater().inflate(R.menu.info, menu);
 		return true;
 	}
 
@@ -56,45 +51,28 @@ public class FrontActivity extends ActionBarActivity {
 	/**
 	 * A placeholder fragment containing a simple view.
 	 */
-	public static class PlaceholderFragment extends ListFragment {
-		ArrayList<HashMap<String, Object>> categories=new ArrayList<HashMap<String, Object>>();
-		ExtendedSimpleAdapter ext;
+	public static class PlaceholderFragment extends Fragment {
+		String c;
 		public PlaceholderFragment() {
 		}
 
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container,
 				Bundle savedInstanceState) {
-			View rootView = inflater.inflate(R.layout.fragment_home, container,
+			View rootView = inflater.inflate(R.layout.fragment_info, container,
 					false);
 			
-			//new showItems()
 			return rootView;
 		}
+		
 		public void onActivityCreated(Bundle savedInstanceState){
 			super.onActivityCreated(savedInstanceState);
-			HashMap<String, Object> map = new HashMap<String, Object>();
-			map.put("event_name","Hockey");
-			categories.add(map);
-			HashMap<String, Object> map1 = new HashMap<String, Object>();
-			map1.put("event_name","Swimming");
-			categories.add(map1);
-			ext= new ExtendedSimpleAdapter(getActivity(), categories, R.layout.sportsitem, new String[] { "event_name"},
-	                new int[] { R.id.eventName});
-			 setListAdapter(ext);
-			 ListView l=getListView();
-				l.setOnItemClickListener(new OnItemClickListener(){
-					public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
-							long arg3){
-						if(arg2==1){
-							Intent i= new Intent(getActivity(), MapActivity.class);
-							 startActivity(i);
-						}
-					}
-					
-				});
-			 
-			
+			Intent in= getActivity().getIntent();
+			Bundle extras=in.getExtras();
+			c=extras.getString("Name");
+			TextView tx=(TextView)getView().findViewById(R.id.eventInfo);
+			tx.setText(c);
 		}
 	}
+
 }
