@@ -6,11 +6,19 @@
 
     <TextView
         android:id="@+id/eventName"
-        android:layout_width="fill_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="30sp"
+		android:layout_marginLeft="45dp"
         android:paddingBottom="10sp"
-         />
-      
+        android:paddingTop="10sp"
+        android:textSize="35sp" />
+
+    <ImageView
+        android:id="@+id/eventPic"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:paddingBottom="10sp" />
 
 </RelativeLayout>

@@ -83,7 +83,7 @@ public class FrontActivity extends ActionBarActivity {
 			map2.put("event_name","Parks");
 			categories.add(map2);
 			HashMap<String, Object> map3 = new HashMap<String, Object>();
-			map3.put("event_name","Running Paths");
+			map3.put("event_name","Bike Paths");
 			categories.add(map3);
 			ext= new ExtendedSimpleAdapter(getActivity(), categories, R.layout.sportsitem, new String[] { "event_name"},
 	                new int[] { R.id.eventName});

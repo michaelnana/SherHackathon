@@ -32,6 +32,7 @@ import com.google.android.gms.maps.model.PolylineOptions;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -64,7 +65,7 @@ public class BikeActivity extends ActionBarActivity {
 	public boolean onCreateOptionsMenu(Menu menu) {
 
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.bike, menu);
+		//getMenuInflater().inflate(R.menu.bike, menu);
 		return true;
 	}
 
@@ -93,6 +94,7 @@ public class BikeActivity extends ActionBarActivity {
 		ArrayList names=new ArrayList();
 		double myLat;
 		double myLong;
+		ProgressDialog pd;
 
 		public PlaceholderFragment() {
 		}
@@ -108,7 +110,12 @@ public class BikeActivity extends ActionBarActivity {
 		
 		public void onActivityCreated(Bundle savedInstanceState){
 			super.onActivityCreated(savedInstanceState);
-			
+			pd = new ProgressDialog(getActivity());
+            pd.setTitle("On cherche...");
+            pd.setMessage("Juste un instant...");
+            pd.setCancelable(false);
+            pd.setIndeterminate(true);
+            pd.show();
 			mapper = ((SupportMapFragment) getFragmentManager().findFragmentById(R.id.map))
 			        .getMap();
 			    /*Marker hamburg = mapper.addMarker(new MarkerOptions().position(POS)
@@ -122,10 +129,10 @@ public class BikeActivity extends ActionBarActivity {
 						Marker here = mapper.addMarker(new MarkerOptions().position(POS)
 						        .title("You are here"));
 						 // Move the camera instantly to your location with a zoom of 25.
-					    mapper.moveCamera(CameraUpdateFactory.newLatLngZoom(POS, 25));
+					    mapper.moveCamera(CameraUpdateFactory.newLatLngZoom(POS, 10));
 					
 					    // Zoom in, animating the camera.
-					    mapper.animateCamera(CameraUpdateFactory.zoomTo(10), 2000, null);
+					   // mapper.animateCamera(CameraUpdateFactory.zoomTo(10), 2000, null);
 					   
 				        
 				    }
@@ -177,6 +184,7 @@ public class BikeActivity extends ActionBarActivity {
 		//currName=(String)names.get(i);
 		Marker hamburg = map.addMarker(new MarkerOptions().position(piscine)
         .title((String)names.get(i)));
+		
 		 map.setOnInfoWindowClickListener(new OnInfoWindowClickListener() {
 
 		        public void onInfoWindowClick(Marker marker) {
@@ -196,7 +204,7 @@ public class BikeActivity extends ActionBarActivity {
 	}
 	
 	public void mapBikePath(BikePoints bp, ArrayList<ArrayList<LatLng>> paths){
-		 
+		
 		for( int i=0;i<paths.size();i++){
 		Polyline line = mapper.addPolyline(new PolylineOptions()
 		    .add()
@@ -205,6 +213,7 @@ public class BikeActivity extends ActionBarActivity {
 		line.setPoints(bp.latlngs.get(i));
 		line.setVisible(true);
 		}
+		pd.dismiss(); 
 		}
 	
 	class BikePoints extends AsyncTask<String, String, String> {

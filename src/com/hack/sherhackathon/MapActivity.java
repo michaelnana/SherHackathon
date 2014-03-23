@@ -44,6 +44,7 @@ import android.widget.*;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 
@@ -66,7 +67,7 @@ public class MapActivity extends ActionBarActivity {
 	public boolean onCreateOptionsMenu(Menu menu) {
 
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.map, menu);
+		//getMenuInflater().inflate(R.menu.map, menu);
 		return true;
 	}
 
@@ -105,6 +106,7 @@ public class MapActivity extends ActionBarActivity {
 		  double myLat;
 		  double myLong;
 		 String currName;
+		 ProgressDialog pd;
 		  
 		public PlaceholderFragment() {
 		}
@@ -119,6 +121,12 @@ public class MapActivity extends ActionBarActivity {
 		
 		public void onActivityCreated(Bundle savedInstanceState){
 			super.onActivityCreated(savedInstanceState);
+			pd = new ProgressDialog(getActivity());
+            pd.setTitle("On cherche...");
+            pd.setMessage("Juste un instant...");
+            pd.setCancelable(false);
+            pd.setIndeterminate(true);
+            pd.show();
 			//tx=(TextView)getView().findViewById(R.id.testText);
 			//map = ((SupportMapFragment) getFragmentManager().findFragmentById(R.id.map)).getMap();
 			new SportPoints().execute();
@@ -134,12 +142,13 @@ public class MapActivity extends ActionBarActivity {
 				        myLat = location.getLatitude();
 				        POS=new LatLng(myLat, myLong);
 						Marker here = mapper.addMarker(new MarkerOptions().position(POS)
-						        .title("You are here"));
+						        .title("You are here")
+						        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_YELLOW)));
 						 // Move the camera instantly to your location with a zoom of 25.
-					    mapper.moveCamera(CameraUpdateFactory.newLatLngZoom(POS, 25));
+					    mapper.moveCamera(CameraUpdateFactory.newLatLngZoom(POS, 12));
 					
 					    // Zoom in, animating the camera.
-					    mapper.animateCamera(CameraUpdateFactory.zoomTo(10), 2000, null);
+					   // mapper.animateCamera(CameraUpdateFactory.zoomTo(10), 2000, null);
 					   
 				        
 				    }
@@ -171,12 +180,15 @@ public class MapActivity extends ActionBarActivity {
 			Log.d("Length of values", "Pairs: "+pairs.size());
 			for(int i=0; i<pairs.size(); i++){
 				printRed = false;
-				map = ((SupportMapFragment) getFragmentManager().findFragmentById(R.id.map)).getMap();
+				mapper = ((SupportMapFragment) getFragmentManager().findFragmentById(R.id.map)).getMap();
 			piscine=new LatLng((double)((ArrayList)pairs.get(i)).get(0), (double)((ArrayList)pairs.get(i)).get(1));
 			currName=(String)names.get(i);
-			Marker hamburg = map.addMarker(new MarkerOptions().position(piscine)
-	        .title((String)names.get(i)));
-			 map.setOnInfoWindowClickListener(new OnInfoWindowClickListener() {
+			Marker hamburg = mapper.addMarker(new MarkerOptions().position(piscine)
+	        .title((String)names.get(i))
+	        .snippet("Open")
+	        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
+			pd.dismiss();
+			 mapper.setOnInfoWindowClickListener(new OnInfoWindowClickListener() {
 
 			        public void onInfoWindowClick(Marker marker) {
 			        	//handleClick();
@@ -185,6 +197,7 @@ public class MapActivity extends ActionBarActivity {
 			            Bundle extras=new Bundle();
 			            extras.putString("Name",marker.getTitle());
 			            it.putExtras(extras);
+			            if(!marker.getTitle().equals("You are here"))
 			            startActivity(it);
 
 			        }
@@ -201,10 +214,11 @@ public class MapActivity extends ActionBarActivity {
                 map = ((SupportMapFragment) getFragmentManager().findFragmentById(R.id.map)).getMap();
             piscine=new LatLng((double)((ArrayList)pairs2.get(i)).get(0), (double)((ArrayList)pairs2.get(i)).get(1));
             currName=(String)names2.get(i);
-            Marker hamburg = map.addMarker(new MarkerOptions().position(piscine)
+            Marker hamburg = mapper.addMarker(new MarkerOptions().position(piscine)
             .title((String)names2.get(i)));
             hamburg.setRotation(90);
-            map.setOnInfoWindowClickListener(new OnInfoWindowClickListener() {
+            pd.dismiss();
+            mapper.setOnInfoWindowClickListener(new OnInfoWindowClickListener() {
 
                     public void onInfoWindowClick(Marker marker) {
                         //handleClick();
@@ -213,6 +227,7 @@ public class MapActivity extends ActionBarActivity {
                         Bundle extras=new Bundle();
                         extras.putString("Name",marker.getTitle());
                         it.putExtras(extras);
+                        if(!marker.getTitle().equals("You are here"))
                         startActivity(it);    
                     }
                 });

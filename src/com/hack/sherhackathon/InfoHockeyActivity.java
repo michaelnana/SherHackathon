@@ -77,6 +77,8 @@ public class InfoHockeyActivity extends ActionBarActivity {
 		  JSONObject jse;
 		  String telphone;
 		  String contact;
+		  String cost;
+		  String addr;
 		public PlaceholderFragment() {
 		}
 
@@ -94,8 +96,10 @@ public class InfoHockeyActivity extends ActionBarActivity {
 			Intent in= getActivity().getIntent();
 			Bundle extras=in.getExtras();
 			c=extras.getString("Name");
-			TextView tx=(TextView)getView().findViewById(R.id.eventInfo);
-			tx.setText(c); 
+			//TextView tx=(TextView)getView().findViewById(R.id.eventInfo);
+			//tx.setText(c); 
+			getActivity().getActionBar().setTitle(c);
+			
 			new addInfo().execute();
 			
 		}
@@ -104,12 +108,31 @@ public class InfoHockeyActivity extends ActionBarActivity {
 			ImageView img=(ImageView)getView().findViewById(R.id.locPic);
             img.setImageBitmap(bitm);
             ListView lv=(ListView)getView().findViewById(R.id.eventStuff);
+            
+            if(!contact.equals("null")){
             HashMap<String, Object> map = new HashMap<String, Object>();
 			map.put("event_name",contact);
 			categories.add(map);
+            }
+			
+            if(!telphone.equals("null")){
 			HashMap<String, Object> map1 = new HashMap<String, Object>();
 			map1.put("event_name",telphone);
 			categories.add(map1);
+            }
+			
+            if(!cost.equals("null")){
+			HashMap<String, Object> map2 = new HashMap<String, Object>();
+			map2.put("event_name",cost);
+			categories.add(map2);
+            }
+			
+            if(!addr.equals("null")){
+			HashMap<String, Object> map3 = new HashMap<String, Object>();
+			map3.put("event_name",addr);
+			categories.add(map3);
+            }
+			
 			ext= new ExtendedSimpleAdapter(getActivity(), categories, R.layout.infoitem, new String[] { "event_name"},
 	                new int[] { R.id.eventName});
 			 lv.setAdapter(ext);
@@ -171,6 +194,8 @@ public class InfoHockeyActivity extends ActionBarActivity {
 						if(c.equals(jo.getString("LOC"))){
 							telphone=jo.getString("TEL1");
 							contact=jo.getString("CONTACT");
+							cost=jo.getString("CO");
+							addr=jo.getString("AD");
 						}
 						
 						}
