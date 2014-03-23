@@ -181,7 +181,7 @@ public class InfoHockeyActivity extends ActionBarActivity {
 			@Override
 			protected String doInBackground(String... params) {
 				// TODO Auto-generated method stub
-					bitm=  getBitmapFromURL("http://p7.storage.canalblog.com/79/85/303679/90341491_p.jpg");
+					bitm=  getBitmapFromURL("http://www.dryden.ca/UserFiles/Servers/Server_6/Image/Facility%20Pictures%20093%20(600%20x%20450).jpg");
 					try {
 						js= new JSONObject(readUrl("http://donnees.ville.sherbrooke.qc.ca/storage/f/2014-03-03T00%3A48%3A54.982Z/patin-hockey-libres.json"));
 						JSONObject jss=js.getJSONObject("PATIN_HOCKEY_LIBRES");
