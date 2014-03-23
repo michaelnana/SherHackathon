@@ -79,6 +79,12 @@ public class FrontActivity extends ActionBarActivity {
 			HashMap<String, Object> map1 = new HashMap<String, Object>();
 			map1.put("event_name","Swimming");
 			categories.add(map1);
+			HashMap<String, Object> map2 = new HashMap<String, Object>();
+			map2.put("event_name","Parks");
+			categories.add(map2);
+			HashMap<String, Object> map3 = new HashMap<String, Object>();
+			map3.put("event_name","Running Paths");
+			categories.add(map3);
 			ext= new ExtendedSimpleAdapter(getActivity(), categories, R.layout.sportsitem, new String[] { "event_name"},
 	                new int[] { R.id.eventName});
 			 setListAdapter(ext);
@@ -88,6 +94,18 @@ public class FrontActivity extends ActionBarActivity {
 							long arg3){
 						if(arg2==1){
 							Intent i= new Intent(getActivity(), MapActivity.class);
+							 startActivity(i);
+						}
+						if(arg2==0){
+							Intent i= new Intent(getActivity(), HockeyActivity.class);
+							 startActivity(i);
+						}
+						if(arg2==2){
+							Intent i= new Intent(getActivity(), ParkActivity.class);
+							 startActivity(i);
+						}
+						if(arg2==3){
+							Intent i= new Intent(getActivity(), BikeActivity.class);
 							 startActivity(i);
 						}
 					}

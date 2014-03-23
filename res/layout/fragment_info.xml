@@ -12,13 +12,16 @@
     <TextView
         android:id="@+id/eventInfo"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:paddingLeft="15dp"
+        android:textSize="35dp" />
     <ImageView
         android:id="@+id/locPic"
         android:layout_width="fill_parent"
         android:layout_height="200dp" />
     <ListView
         android:id="@+id/eventStuff"
+        android:paddingTop="10dp"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         />

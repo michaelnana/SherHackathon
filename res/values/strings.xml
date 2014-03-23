@@ -9,5 +9,11 @@
     <string name="title_activity_map">MapActivity</string>
     <string name="title_activity_front">FrontActivity</string>
     <string name="title_activity_info">InfoActivity</string>
+    <string name="title_activity_hockey">HockeyActivity</string>
+    <string name="title_activity_info_hockey">InfoHockeyActivity</string>
+    <string name="title_activity_park">ParkActivity</string>
+    <string name="title_activity_info_park">InfoParkActivity</string>
+    <string name="title_activity_park_info">ParkInfoActivity</string>
+    <string name="title_activity_bike">BikeActivity</string>
 
 </resources>
