@@ -23,6 +23,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.GoogleMap.OnInfoWindowClickListener;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -63,7 +64,7 @@ getSupportFragmentManager().beginTransaction()
 public boolean onCreateOptionsMenu(Menu menu) {
 
 // Inflate the menu; this adds items to the action bar if it is present.
-getMenuInflater().inflate(R.menu.park, menu);
+//getMenuInflater().inflate(R.menu.park, menu);
 return true;
 }
 
@@ -117,7 +118,16 @@ public void onActivityCreated(Bundle savedInstanceState){
 super.onActivityCreated(savedInstanceState);
  
 mapper = ((SupportMapFragment) getFragmentManager().findFragmentById(R.id.map))
-       .getMap();
+.getMap();
+POS=new LatLng(45.4,-71.9);
+Marker here = mapper.addMarker(new MarkerOptions().position(POS)
+.title("You are here")
+.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_YELLOW)));
+// Move the camera instantly to your location with a zoom of 25.
+mapper.moveCamera(CameraUpdateFactory.newLatLngZoom(POS, 12));
+
+// Zoom in, animating the camera.
+mapper.animateCamera(CameraUpdateFactory.zoomTo(10), 2000, null);
    /*Marker hamburg = mapper.addMarker(new MarkerOptions().position(POS)
        .title("You are here"));*/
    LocationManager lm = (LocationManager)getActivity().getSystemService(Context.LOCATION_SERVICE);

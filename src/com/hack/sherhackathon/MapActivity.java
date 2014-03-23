@@ -130,9 +130,20 @@ public class MapActivity extends ActionBarActivity {
 			//tx=(TextView)getView().findViewById(R.id.testText);
 			//map = ((SupportMapFragment) getFragmentManager().findFragmentById(R.id.map)).getMap();
 			new SportPoints().execute();
+			
+
 			//piscine=new LatLng(myLat, myLong);
 			mapper = ((SupportMapFragment) getFragmentManager().findFragmentById(R.id.map))
 			        .getMap();
+		/*	POS=new LatLng(45.4,-71.9);
+			Marker here = mapper.addMarker(new MarkerOptions().position(POS)
+			        .title("You are here")
+			        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_YELLOW)));
+			 // Move the camera instantly to your location with a zoom of 25.
+		    mapper.moveCamera(CameraUpdateFactory.newLatLngZoom(POS, 50));*/
+		
+		    // Zoom in, animating the camera.
+		    mapper.animateCamera(CameraUpdateFactory.zoomTo(25), 2000, null);
 			    /*Marker hamburg = mapper.addMarker(new MarkerOptions().position(POS)
 			        .title("You are here"));*/
 			    LocationManager lm = (LocationManager)getActivity().getSystemService(Context.LOCATION_SERVICE);
@@ -148,7 +159,7 @@ public class MapActivity extends ActionBarActivity {
 					    mapper.moveCamera(CameraUpdateFactory.newLatLngZoom(POS, 12));
 					
 					    // Zoom in, animating the camera.
-					   // mapper.animateCamera(CameraUpdateFactory.zoomTo(10), 2000, null);
+					    mapper.animateCamera(CameraUpdateFactory.zoomTo(10), 2000, null);
 					   
 				        
 				    }
@@ -171,7 +182,7 @@ public class MapActivity extends ActionBarActivity {
 						
 					}
 				};
-				lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 2000, 10, locationListener);
+				lm.requestLocationUpdates(LocationManager.GPS_PROVIDER,2000, 10, locationListener);
 			
 		}
 		
@@ -216,7 +227,7 @@ public class MapActivity extends ActionBarActivity {
             currName=(String)names2.get(i);
             Marker hamburg = mapper.addMarker(new MarkerOptions().position(piscine)
             .title((String)names2.get(i)));
-            hamburg.setRotation(90);
+            //hamburg.setRotation(90);
             pd.dismiss();
             mapper.setOnInfoWindowClickListener(new OnInfoWindowClickListener() {
 

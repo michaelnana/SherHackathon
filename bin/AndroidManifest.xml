@@ -21,17 +21,13 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@drawable/ic_launcher"
+        android:icon="@drawable/sannoback"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
             android:name="com.hack.sherhackathon.LauncherActivity"
             android:label="@string/app_name" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            
         </activity>
         <activity
             android:name="com.hack.sherhackathon.MapActivity"
@@ -76,6 +72,27 @@
         <activity
             android:name="com.hack.sherhackathon.BikeActivity"
             android:label="@string/title_activity_bike" >
+        </activity>
+        <activity
+            android:name="com.hack.sherhackathon.DivideActivity"
+            android:label="@string/title_activity_divide" >
+        </activity>
+        <activity
+            android:name="com.hack.sherhackathon.GeneralActivity"
+            android:label="@string/title_activity_general" >
+        </activity>
+        <activity
+            android:name="com.hack.sherhackathon.DivActivity"
+            android:label="@string/title_activity_div" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.hack.sherhackathon.EventsActivity"
+            android:label="@string/title_activity_events" >
         </activity>
     </application>
 

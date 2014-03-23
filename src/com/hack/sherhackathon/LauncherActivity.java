@@ -67,7 +67,7 @@ public class LauncherActivity extends ActionBarActivity {
 					container, false);
 			new Handler().postDelayed(new Runnable(){
 				public void run(){
-					Intent start= new Intent(getActivity(), FrontActivity.class);
+					Intent start= new Intent(getActivity(), DivActivity.class);
 					startActivity(start);
 				}
 			},waitTime

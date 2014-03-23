@@ -37,7 +37,7 @@ public class FrontActivity extends ActionBarActivity {
 	public boolean onCreateOptionsMenu(Menu menu) {
 
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.front, menu);
+		//getMenuInflater().inflate(R.menu.front, menu);
 		return true;
 	}
 
@@ -59,6 +59,7 @@ public class FrontActivity extends ActionBarActivity {
 	public static class PlaceholderFragment extends ListFragment {
 		ArrayList<HashMap<String, Object>> categories=new ArrayList<HashMap<String, Object>>();
 		ExtendedSimpleAdapter ext;
+		int count=0;
 		public PlaceholderFragment() {
 		}
 
@@ -73,21 +74,25 @@ public class FrontActivity extends ActionBarActivity {
 		}
 		public void onActivityCreated(Bundle savedInstanceState){
 			super.onActivityCreated(savedInstanceState);
+			if(count==0){ 
 			HashMap<String, Object> map = new HashMap<String, Object>();
-			map.put("event_name","Hockey");
+			map.put("event_name","Patins libres");
 			categories.add(map);
 			HashMap<String, Object> map1 = new HashMap<String, Object>();
-			map1.put("event_name","Swimming");
+			map1.put("event_name","Bains libres");
 			categories.add(map1);
 			HashMap<String, Object> map2 = new HashMap<String, Object>();
-			map2.put("event_name","Parks");
+			map2.put("event_name","Parcs");
 			categories.add(map2);
 			HashMap<String, Object> map3 = new HashMap<String, Object>();
-			map3.put("event_name","Bike Paths");
+			map3.put("event_name","Pistes Cyclables");
 			categories.add(map3);
 			ext= new ExtendedSimpleAdapter(getActivity(), categories, R.layout.sportsitem, new String[] { "event_name"},
 	                new int[] { R.id.eventName});
-			 setListAdapter(ext);
+			
+			setListAdapter(ext);
+			count++;
+			}
 			 ListView l=getListView();
 				l.setOnItemClickListener(new OnItemClickListener(){
 					public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
