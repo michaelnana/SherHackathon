@@ -286,7 +286,7 @@ public class MapActivity extends ActionBarActivity {
 			return false;
 		}
 		
-class SportPoints  extends AsyncTask<String, String, String> {
+		class SportPoints  extends AsyncTask<String, String, String> {
             
             @Override
             protected String doInBackground(String... params) {
